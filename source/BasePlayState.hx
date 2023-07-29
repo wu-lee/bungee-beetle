@@ -19,45 +19,50 @@ import haxe.macro.Compiler.IncludePosition;
 import lime.math.ColorMatrix;
 import lime.utils.PackedAssetLibrary;
 import openfl.errors.Error;
+import openfl.text.AntiAliasType;
 import openfl.ui.Keyboard;
 import sys.ssl.Key;
 import sys.thread.ElasticThreadPool;
 
 using flixel.util.FlxSpriteUtil;
 
+enum SpawnType
+{
+	Fly;
+	//	Worm;
+	//	Rock;
+}
+
 typedef Wall = Array<Int>;
 
-typedef Level =
+typedef Spawn =
+{
+	public var pos:FlxPoint;
+	public var type:SpawnType;
+}
+
+typedef LevelMap =
 {
 	public var walls:Array<Wall>;
-	public var spawns:Array<FlxPoint>;
+
+	public var spawns:Array<Spawn>;
 	public var doors:Array<FlxPoint>;
 	public var player:FlxPoint;
 }
 
-class PlayState extends FlxState
+abstract class BasePlayState extends FlxState
 {
-	static var outerWallwidth = 80;
-	static var innerWallWidth = 15;
+	public static var outerWallwidth = 80;
+	public static var innerWallWidth = 15;
 
 	var player:Player;
 	var hook:Hook;
 	var line:FlxSprite;
 	var grpWalls:FlxTypedGroup<FlxSprite> = null;
-	var enemy:Enemy;
-	var door:Door;
-	var map:FlxOgmo3Loader;
-	var tiles:FlxTilemap;
-	var level1:Level = {
-		walls: [
-			[0, FlxG.height - 120, FlxG.width - 120, innerWallWidth],
-			[0, 120, FlxG.width - 120, innerWallWidth],
-			[FlxG.width - 300, 250, FlxG.width - 300, innerWallWidth],
-		],
-		spawns: [FlxPoint.get(50, FlxG.height - 50)],
-		doors: [FlxPoint.get(50, 50)],
-		player: FlxPoint.get(50, FlxG.height - 50),
-	};
+	var enemys:Array<FlxSprite> = [];
+	var doors:Array<Door> = [];
+
+	abstract function getMap():LevelMap;
 
 	function makewall(x, y, width:Int, height:Int, color:FlxColor)
 	{
@@ -67,7 +72,7 @@ class PlayState extends FlxState
 		grpWalls.add(wall);
 	}
 
-	function makeLevel(level:Level)
+	function makeLevel(level:LevelMap)
 	{
 		if (level.walls == null)
 		{
@@ -88,13 +93,20 @@ class PlayState extends FlxState
 
 		player = new Player(hook, grpWalls, level.player.x, level.player.y);
 		add(player);
-		enemy = new Enemy(player);
-		add(enemy);
+
+		for (spawn in level.spawns)
+		{
+			var enemy = new Enemy(spawn.pos.x, spawn.pos.y, player);
+			enemys.push(enemy);
+			add(enemy);
+		}
+
 		for (i in level.doors)
 		{
-			door = new Door(i.x, i.y, enemy, Math.floor(player.width), Math.floor(player.height));
+			var door = new Door(i.x, i.y, player, Math.floor(player.width), Math.floor(player.height));
+			doors.push(door);
+			add(door);
 		}
-		add(door);
 	}
 
 	override public function create()
@@ -110,7 +122,7 @@ class PlayState extends FlxState
 
 		bgColor = FlxColor.BROWN;
 
-		makeLevel(level1);
+		makeLevel(getMap());
 
 		line.makeGraphic(FlxG.width, FlxG.height, 0, true);
 		add(line);

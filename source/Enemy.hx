@@ -1,3 +1,4 @@
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
@@ -11,15 +12,21 @@ class Enemy extends FlxSprite
 	var target:Player;
 	var vdrag = 0.1;
 
-	public function new(target:Player)
+	public function new(x:Float, y:Float, target:Player)
 	{
 		super();
 		makeGraphic(5, 5, FlxColor.RED);
+		loadGraphic("assets/images/badfly.png", true, 8, 8);
 
+		animation.add("fly", [0, 1, 2], 12);
+		animation.play("fly");
 		this.scale.x = this.scale.y = rescale;
 		width *= rescale;
 		height *= rescale;
 		this.target = target;
+
+		this.x = x;
+		this.y = y;
 	}
 
 	override function update(elapsed:Float)
@@ -36,5 +43,12 @@ class Enemy extends FlxSprite
 		velocity += step;
 		// update velocity with friction
 		velocity *= Math.pow(vdrag, elapsed);
+
+		// restes level when you touch enemy
+		if (this.overlaps(target))
+		{
+			FlxG.resetState();
+			// target.hurt(1);
+		}
 	}
 }

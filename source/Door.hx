@@ -11,13 +11,13 @@ import openfl.utils.Object;
 
 class Door extends FlxSprite
 {
-	var enemy:Enemy;
+	var player:Player;
 
-	public function new(x:Float, y:Float, enemy, width:Int, height:Int)
+	public function new(x:Float, y:Float, player:Player, width:Int, height:Int)
 	{
 		super();
 		makeGraphic(width + 3, height + 3, FlxColor.BLACK);
-
+		this.player = player;
 		this.x = x;
 		this.y = y;
 	}
@@ -25,5 +25,10 @@ class Door extends FlxSprite
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		if (this.overlaps(player))
+		{
+			FlxG.switchState(new Level1P());
+		}
 	}
 }
