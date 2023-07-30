@@ -1,30 +1,39 @@
+import BasePlayState.Spawn;
+import BasePlayState.SpawnType;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
+import haxe.display.Display.Package;
+import haxe.macro.Expr.Case;
 import lime.tools.Platform;
+import openfl.errors.Error;
 import openfl.geom.Point;
 
-class Enemy extends FlxSprite
+abstract class Enemy extends FlxSprite
 {
-	var rescale = 3;
-	var speed = 10;
+	var speed = 5;
 	var target:Player;
 	var vdrag = 0.1;
+
+	public static function makeEnemy(type:SpawnType, x:Float, y:Float, player:Player):Enemy
+	{
+		return switch (type)
+		{
+			case Worm:
+				new Worm(x, y, player);
+			case BadFly:
+				new BadFly(x, y, player);
+			default:
+				throw new Error("unknown spawn type '$type'");
+		}
+	}
 
 	public function new(x:Float, y:Float, target:Player)
 	{
 		super();
-		makeGraphic(5, 5, FlxColor.RED);
-		loadGraphic("assets/images/badfly.png", true, 8, 8);
 
-		animation.add("fly", [0, 1, 2], 12);
-		animation.play("fly");
-		this.scale.x = this.scale.y = rescale;
-		width *= rescale;
-		height *= rescale;
 		this.target = target;
-
 		this.x = x;
 		this.y = y;
 	}
@@ -33,22 +42,10 @@ class Enemy extends FlxSprite
 	{
 		super.update(elapsed);
 
-		var ePos = getPosition();
-		var pPos:FlxPoint = target.getPosition(); // player pos
-		var ep:FlxPoint = pPos - ePos;
-		var eplen = ep;
-		var unit = ep.normalize();
-		var step = unit * speed;
-
-		velocity += step;
-		// update velocity with friction
-		velocity *= Math.pow(vdrag, elapsed);
-
 		// restes level when you touch enemy
 		if (this.overlaps(target))
 		{
 			FlxG.resetState();
-			// target.hurt(1);
 		}
 	}
 }

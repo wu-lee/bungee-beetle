@@ -12,11 +12,17 @@ import openfl.utils.Object;
 class Door extends FlxSprite
 {
 	var player:Player;
+	var rescale = 3;
 
 	public function new(x:Float, y:Float, player:Player, width:Int, height:Int)
 	{
 		super();
-		makeGraphic(width + 3, height + 3, FlxColor.BLACK);
+
+		loadGraphic("assets/images/exit sign.png", false, 16, 16);
+		this.scale.x = this.scale.y = rescale;
+		width *= rescale;
+		height *= rescale;
+
 		this.player = player;
 		this.x = x;
 		this.y = y;

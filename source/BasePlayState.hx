@@ -28,9 +28,10 @@ using flixel.util.FlxSpriteUtil;
 
 enum SpawnType
 {
-	Fly;
-	//	Worm;
+	BadFly;
+	Worm;
 	//	Rock;
+	// spike;
 }
 
 typedef Wall = Array<Int>;
@@ -96,7 +97,8 @@ abstract class BasePlayState extends FlxState
 
 		for (spawn in level.spawns)
 		{
-			var enemy = new Enemy(spawn.pos.x, spawn.pos.y, player);
+			var enemy = Enemy.makeEnemy(spawn.type, spawn.pos.x, spawn.pos.y, player);
+
 			enemys.push(enemy);
 			add(enemy);
 		}
