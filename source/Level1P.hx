@@ -13,11 +13,11 @@ class Level1P extends BasePlayState
 		],
 		spawns: [
 			{
-				pos: FlxPoint.get(100, 50),
+				pos: FlxPoint.get(100, 20),
 				type: Worm,
 			},
 		],
-		doors: [FlxPoint.get(50, 50)],
+		doors: [{pos: FlxPoint.get(50, 50), levelName: Level2P}],
 		player: FlxPoint.get(50, FlxG.height - 50),
 	};
 

@@ -73,18 +73,6 @@ class Player extends FlxSprite
 		velocity *= Math.pow(vdrag, elapsed);
 	}
 
-	function elasticforce(distance:Float, lengthElastic:Float, springStrength:Float):Float
-	{
-		if (lengthElastic >= distance)
-		{
-			return 0;
-		}
-		else
-		{
-			return (distance - lengthElastic) * springStrength;
-		}
-	}
-
 	public function onhooked()
 	{
 		state = Hooked;
@@ -107,8 +95,7 @@ class Player extends FlxSprite
 
 		var unit = metohook.normalize();
 
-		velocity += elasticforce(myPos.distanceTo(hookPos), elasticLength, elasticStrength) * unit * elapsed;
-		trace(velocity);
+		velocity += Physics.elasticforce(myPos.distanceTo(hookPos), elasticLength, elasticStrength) * unit * elapsed;
 
 		updatedrag(elapsed);
 		if (FlxG.keys.pressed.Q)

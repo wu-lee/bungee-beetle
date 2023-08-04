@@ -34,6 +34,12 @@ enum SpawnType
 	// spike;
 }
 
+enum LevelName
+{
+	Level1P;
+	Level2P;
+}
+
 typedef Wall = Array<Int>;
 
 typedef Spawn =
@@ -42,17 +48,36 @@ typedef Spawn =
 	public var type:SpawnType;
 }
 
+typedef Exit =
+{
+	public var pos:FlxPoint;
+	public var levelName:LevelName;
+}
+
 typedef LevelMap =
 {
 	public var walls:Array<Wall>;
 
 	public var spawns:Array<Spawn>;
-	public var doors:Array<FlxPoint>;
+	public var doors:Array<Exit>;
 	public var player:FlxPoint;
 }
 
 abstract class BasePlayState extends FlxState
 {
+	public static function loadLevel(type:LevelName):BasePlayState
+	{
+		return switch (type)
+		{
+			case Level1P:
+				new Level1P();
+			case Level2P:
+				new Level2P();
+			default:
+				throw new Error("unknown Level name '$type'");
+		}
+	}
+
 	public static var outerWallwidth = 80;
 	public static var innerWallWidth = 15;
 
@@ -100,12 +125,18 @@ abstract class BasePlayState extends FlxState
 			var enemy = Enemy.makeEnemy(spawn.type, spawn.pos.x, spawn.pos.y, player);
 
 			enemys.push(enemy);
+
+			for (child in enemy.children)
+			{
+				add(child);
+			}
 			add(enemy);
 		}
 
-		for (i in level.doors)
+		for (exit in level.doors)
 		{
-			var door = new Door(i.x, i.y, player, Math.floor(player.width), Math.floor(player.height));
+			var level = BasePlayState.loadLevel(exit.levelName);
+			var door = new Door(exit.pos.x, exit.pos.y, player, Math.floor(player.width), Math.floor(player.height), level);
 			doors.push(door);
 			add(door);
 		}

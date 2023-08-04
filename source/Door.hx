@@ -13,8 +13,9 @@ class Door extends FlxSprite
 {
 	var player:Player;
 	var rescale = 3;
+	var destination:BasePlayState;
 
-	public function new(x:Float, y:Float, player:Player, width:Int, height:Int)
+	public function new(x:Float, y:Float, player:Player, width:Int, height:Int, destinationLevel:BasePlayState)
 	{
 		super();
 
@@ -23,6 +24,7 @@ class Door extends FlxSprite
 		width *= rescale;
 		height *= rescale;
 
+		this.destination = destinationLevel;
 		this.player = player;
 		this.x = x;
 		this.y = y;
@@ -34,7 +36,7 @@ class Door extends FlxSprite
 
 		if (this.overlaps(player))
 		{
-			FlxG.switchState(new Level1P());
+			FlxG.switchState(destination);
 		}
 	}
 }

@@ -12,9 +12,13 @@ import openfl.geom.Point;
 
 abstract class Enemy extends FlxSprite
 {
-	var speed = 5;
+	var speed = 8;
 	var target:Player;
 	var vdrag = 0.1;
+
+	// Children is used if an enemy uses more than 1 sprite. Like the worm has the segments as it children.
+	// these are simply sprites that are added the the play state when the map is made with makeLevel.
+	public var children:Array<FlxSprite> = [];
 
 	public static function makeEnemy(type:SpawnType, x:Float, y:Float, player:Player):Enemy
 	{
