@@ -12,7 +12,7 @@ import openfl.geom.Point;
 
 abstract class Enemy extends FlxSprite
 {
-	var speed = 8;
+	var speed = 6;
 	var target:Player;
 	var vdrag = 0.1;
 
@@ -24,8 +24,8 @@ abstract class Enemy extends FlxSprite
 	{
 		return switch (type)
 		{
-			case Worm:
-				new Worm(x, y, player);
+			case Worm(length):
+				new Worm(x, y, player, length);
 			case BadFly:
 				new BadFly(x, y, player);
 			default:

@@ -8,30 +8,38 @@ import flixel.tweens.misc.AngleTween;
 class Worm extends Enemy
 {
 	var rescale = 3;
+	var posarr:CircularBuffer<FlxPoint>;
+	var length:Int;
 
 	// public var poslist = [];
 
-	public function new(x, y, player)
+	public function new(x, y, player, length:Int)
 	{
 		super(x, y, player);
 		loadGraphic("assets/images/wrom.png", true, 8, 8);
+		this.length = length;
+
 		this.scale.x = this.scale.y = rescale;
 		width *= rescale;
 		height *= rescale;
 
-		var prev:FlxSprite = this;
-		for (count in 0...3)
+		vdrag = 0.2;
+
+		posarr = new CircularBuffer<FlxPoint>(8, getPosition());
+
+		var prev:CircularBuffer<FlxPoint> = posarr;
+		for (count in 0...length)
 		{
-			var wormBody = new WormBody(prev);
+			var wormBody = new WormBody(prev, player);
 			children.push(wormBody);
-			prev = wormBody;
+			prev = wormBody.posarr;
 		}
 	}
 
 	public override function update(elapsed:Float)
 	{
 		var ePos = getPosition();
-		// poslist.push();
+
 		var pPos:FlxPoint = target.getPosition(); // player pos
 		var ep:FlxPoint = pPos - ePos;
 		var eplen = ep;
@@ -43,5 +51,7 @@ class Worm extends Enemy
 		// update velocity with friction
 		velocity *= Math.pow(vdrag, elapsed);
 		super.update(elapsed);
+
+		posarr.push(getPosition());
 	}
 }

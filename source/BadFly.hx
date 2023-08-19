@@ -1,4 +1,5 @@
 import flixel.math.FlxPoint;
+import openfl.display.SpreadMethod;
 
 class BadFly extends Enemy
 {
@@ -8,6 +9,7 @@ class BadFly extends Enemy
 	{
 		super(x, y, player);
 		loadGraphic("assets/images/badfly.png", true, 8, 8);
+		speed = 8;
 
 		animation.add("fly", [0, 1, 2], 12);
 		animation.play("fly");

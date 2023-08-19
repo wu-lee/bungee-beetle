@@ -29,7 +29,7 @@ using flixel.util.FlxSpriteUtil;
 enum SpawnType
 {
 	BadFly;
-	Worm;
+	Worm(length:Int);
 	//	Rock;
 	// spike;
 }
