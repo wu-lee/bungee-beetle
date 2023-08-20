@@ -24,8 +24,8 @@ class Level2P extends BasePlayState
 				type: Worm(35),
 			},
 		],
-		doors: [{pos: FlxPoint.get(FlxG.width - 50, 50), levelName: Level1P}],
-		player: FlxPoint.get(FlxG.width - 100, FlxG.height - 50),
+		doors: [{pos: FlxPoint.get(FlxG.width - 50, 50), levelName: EndState}],
+		player: FlxPoint.get(300, FlxG.height - 50),
 	};
 
 	function getMap():BasePlayState.LevelMap

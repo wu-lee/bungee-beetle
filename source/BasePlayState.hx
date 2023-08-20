@@ -38,6 +38,7 @@ enum LevelName
 {
 	Level1P;
 	Level2P;
+	EndState;
 }
 
 typedef Wall = Array<Int>;
@@ -73,6 +74,8 @@ abstract class BasePlayState extends FlxState
 				new Level1P();
 			case Level2P:
 				new Level2P();
+			case EndState:
+				new EndState();
 			default:
 				throw new Error("unknown Level name '$type'");
 		}

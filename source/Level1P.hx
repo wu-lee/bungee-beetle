@@ -17,7 +17,7 @@ class Level1P extends BasePlayState
 				type: BadFly,
 			},
 		],
-		doors: [{pos: FlxPoint.get(50, FlxG.height - 50), levelName: Level2P}],
+		doors: [{pos: FlxPoint.get(50, 60), levelName: Level2P}],
 		player: FlxPoint.get(50, FlxG.height - 50),
 	};
 
