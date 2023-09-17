@@ -4,7 +4,6 @@ import flixel.input.actions.FlxAction;
 import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.GraphicVirtualInput;
 import flixel.util.FlxColor;
-import hl.Abstract;
 import lime.tools.Platform;
 import openfl.geom.Point;
 import openfl.utils.Object;

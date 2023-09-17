@@ -21,8 +21,6 @@ import lime.utils.PackedAssetLibrary;
 import openfl.errors.Error;
 import openfl.text.AntiAliasType;
 import openfl.ui.Keyboard;
-import sys.ssl.Key;
-import sys.thread.ElasticThreadPool;
 
 using flixel.util.FlxSpriteUtil;
 
