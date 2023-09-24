@@ -7,9 +7,9 @@ import flixel.ui.FlxButton;
 
 class MenuState extends FlxState
 {
-	var _btnPlay:FlxButton;
+	var _btnEasyMode:FlxButton;
 	var _btnNormalMode:FlxButton;
-	var _btnHardmode:FlxButton;
+	var _btnHardMode:FlxButton;
 
 	override public function create():Void
 	{
@@ -27,15 +27,33 @@ class MenuState extends FlxState
 
 		add(title);
 
-		_btnPlay = new FlxButton(0, 0, "Play", clickPlay);
-		_btnPlay.screenCenter(); // Align at the center
-		add(_btnPlay);
+		_btnEasyMode = new FlxButton(FlxG.width / 2 + 100, FlxG.height / 2 - 50, "Easy Mode", easyMode);
+		_btnNormalMode = new FlxButton(FlxG.width / 2 + 100, FlxG.height / 2, "Normal Mode", normalMode);
+		_btnHardMode = new FlxButton(FlxG.width / 2 + 100, FlxG.height / 2 + 50, "Hard Mode", hardMode);
+		add(_btnEasyMode);
+		add(_btnNormalMode);
+		add(_btnHardMode);
+
 		super.create();
 	}
 
-	// Play button is clicked
-	function clickPlay():Void
+	function easyMode():Void
 	{
+		BasePlayState.difficulty = Easy;
+		// Switched state from current to PlayState
+		FlxG.switchState(new Level1P());
+	}
+
+	function normalMode():Void
+	{
+		BasePlayState.difficulty = Normal;
+		// Switched state from current to PlayState
+		FlxG.switchState(new Level1P());
+	}
+
+	function hardMode():Void
+	{
+		BasePlayState.difficulty = Hard;
 		// Switched state from current to PlayState
 		FlxG.switchState(new Level1P());
 	}

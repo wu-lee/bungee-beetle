@@ -13,9 +13,9 @@ class Worm extends Enemy
 
 	// public var poslist = [];
 
-	public function new(x, y, player, length:Int)
+	public function new(x:Float, y:Float, player:Player, length:Int, speed:Int)
 	{
-		super(x, y, player);
+		super(x, y, player, speed);
 		loadGraphic("assets/images/wrom.png", true, 8, 8);
 		this.length = length;
 

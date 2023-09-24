@@ -12,7 +12,7 @@ import openfl.geom.Point;
 
 abstract class Enemy extends FlxSprite
 {
-	var speed = 6;
+	var speed:Int;
 	var target:Player;
 	var vdrag = 0.1;
 
@@ -20,24 +20,37 @@ abstract class Enemy extends FlxSprite
 	// these are simply sprites that are added the the play state when the map is made with makeLevel.
 	public var children:Array<FlxSprite> = [];
 
-	public static function makeEnemy(type:SpawnType, x:Float, y:Float, player:Player):Enemy
+	public static function makeEnemy(type:SpawnType, x:Float, y:Float, player:Player, difficulty:Difficulty):Enemy
 	{
+		var speed:Int;
+		switch (difficulty)
+		{
+			case Easy:
+				speed = 2;
+			case Normal:
+				speed = 4;
+			case Hard:
+				speed = 6;
+			default:
+				throw new Error("unknown difficulty");
+		}
+
 		return switch (type)
 		{
 			case Worm(length):
-				new Worm(x, y, player, length);
+				new Worm(x, y, player, length, speed);
 			case BadFly:
-				new BadFly(x, y, player);
+				new BadFly(x, y, player, speed);
 			default:
 				throw new Error("unknown spawn type '$type'");
 		}
 	}
 
-	public function new(x:Float, y:Float, target:Player)
+	public function new(x:Float, y:Float, target:Player, speed:Int)
 	{
 		super();
-
 		this.target = target;
+		this.speed = speed;
 		this.x = x;
 		this.y = y;
 	}

@@ -39,7 +39,7 @@ class EndState extends BasePlayState
 	function clickPlay():Void
 	{
 		// Switched state from current to PlayState
-		FlxG.switchState(new Level1P());
+		FlxG.switchState(new MenuState());
 	}
 
 	override public function update(elapsed:Float):Void

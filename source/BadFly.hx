@@ -5,11 +5,10 @@ class BadFly extends Enemy
 {
 	var rescale = 3;
 
-	public function new(x, y, player)
+	public function new(x:Float, y:Float, player:Player, speed:Int)
 	{
-		super(x, y, player);
+		super(x, y, player, speed);
 		loadGraphic("assets/images/badfly.png", true, 8, 8);
-		speed = 8;
 
 		animation.add("fly", [0, 1, 2], 12);
 		animation.play("fly");

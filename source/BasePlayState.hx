@@ -81,6 +81,7 @@ abstract class BasePlayState extends FlxState
 
 	public static var outerWallwidth = 80;
 	public static var innerWallWidth = 15;
+	public static var difficulty:Difficulty = Normal;
 
 	var player:Player;
 	var hook:Hook;
@@ -123,7 +124,7 @@ abstract class BasePlayState extends FlxState
 
 		for (spawn in level.spawns)
 		{
-			var enemy = Enemy.makeEnemy(spawn.type, spawn.pos.x, spawn.pos.y, player);
+			var enemy = Enemy.makeEnemy(spawn.type, spawn.pos.x, spawn.pos.y, player, difficulty);
 
 			enemys.push(enemy);
 
