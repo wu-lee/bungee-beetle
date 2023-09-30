@@ -176,5 +176,9 @@ abstract class BasePlayState extends FlxState
 		{
 			FlxSpriteUtil.drawLine(line, player.x + player.width / 2, player.y + player.height / 2, hook.x, hook.y);
 		}
+		else
+		{
+			FlxSpriteUtil.flashGfx.clear(); // clear line workaround for html5
+		}
 	}
 }
