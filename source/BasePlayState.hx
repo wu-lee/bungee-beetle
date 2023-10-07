@@ -28,7 +28,7 @@ enum SpawnType
 {
 	BadFly;
 	Worm(length:Int);
-	//	Rock;
+	Rock;
 	// spike;
 }
 
@@ -36,6 +36,7 @@ enum LevelName
 {
 	Level1P;
 	Level2P;
+	Level3P;
 	EndState;
 }
 
@@ -72,6 +73,8 @@ abstract class BasePlayState extends FlxState
 				new Level1P();
 			case Level2P:
 				new Level2P();
+			case Level3P:
+				new Level3P();
 			case EndState:
 				new EndState();
 			default:
@@ -178,7 +181,8 @@ abstract class BasePlayState extends FlxState
 		}
 		else
 		{
-			FlxSpriteUtil.flashGfx.clear(); // clear line workaround for html5
+			// FlxSpriteUtil.flashGfx.clear(); // clear
+			FlxSpriteUtil.drawLine(line, -10, -10, -10, -10); // line workaround for html5
 		}
 	}
 }

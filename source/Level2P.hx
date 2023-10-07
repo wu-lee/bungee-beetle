@@ -24,7 +24,7 @@ class Level2P extends BasePlayState
 				type: Worm(35),
 			},
 		],
-		doors: [{pos: FlxPoint.get(FlxG.width - 50, 50), levelName: EndState}],
+		doors: [{pos: FlxPoint.get(FlxG.width - 50, 50), levelName: Level3P}],
 		player: FlxPoint.get(300, FlxG.height - 50),
 	};
 

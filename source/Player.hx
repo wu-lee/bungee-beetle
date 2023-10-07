@@ -153,25 +153,28 @@ class Player extends FlxSprite
 		}
 
 		acceleration.x = 0;
+		/*
+			if (FlxG.keys.pressed.A)
+			{
+				acceleration.x -= power;
+			}
+			if (FlxG.keys.pressed.D)
+			{
+				acceleration.x += power;
+			}
 
-		if (FlxG.keys.pressed.A)
-		{
-			acceleration.x -= power;
-		}
-		if (FlxG.keys.pressed.D)
-		{
-			acceleration.x += power;
-		}
+
+
+			if (FlxG.keys.pressed.W)
+			{
+				acceleration.y -= power;
+			}
+			if (FlxG.keys.pressed.S)
+			{
+				acceleration.y += power;
+			}
+		 */
 
 		acceleration.y = gravity;
-
-		if (FlxG.keys.pressed.W)
-		{
-			acceleration.y -= power;
-		}
-		if (FlxG.keys.pressed.S)
-		{
-			acceleration.y += power;
-		}
 	}
 }

@@ -48,7 +48,7 @@ class MenuState extends FlxState
 	{
 		BasePlayState.difficulty = Normal;
 		// Switched state from current to PlayState
-		FlxG.switchState(new Level1P());
+		FlxG.switchState(new Level3P());
 	}
 
 	function hardMode():Void
